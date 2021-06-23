@@ -1,4 +1,4 @@
-DEBUG = True
+DEBUG = False
 DEBUG_TOKEN = "" # DEBUG = True and DEBUG_TOKEN != "" 就会强制启动Selenium获取Token
 
 URL_Login = "https://jxtw.h5yunban.cn/jxtw-qndxx/admin/login.php"
