@@ -5,7 +5,7 @@ from ClassData.DataAPI import ClassExistsList, ClassGroupID
 from Log import log
 from Message import send_user_message, send_group_message
 from Settings import SERVER_HOST, LOCAL_HOST, PORT, DEBUG, DEBUG_TOKEN, WorkTimeStart, WorkTimeEnd
-from Server import server
+from Server.server import server
 from threading import Thread
 from Scheduler import time_in_work, min_sleep
 
