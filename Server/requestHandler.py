@@ -1,6 +1,8 @@
-import os, json
+import os, json, urllib.parse
 from Logs.logs import log
 from http.server import BaseHTTPRequestHandler
+
+from Message.message import sendFriendMessage
 from Settings.settings import SERVER_LOG
 # Document https://docs.python.org/3.9/library/http.server.html
 
@@ -9,8 +11,8 @@ from Settings.settings import SERVER_LOG
 
 
 class ErrorCode(object):
-    OK = "HTTP/1.1 200 OK\r\n"
-    NOT_FOUND = "HTTP/1.1 404.html Not Found\r\n"
+    OK = "HTTP/1.1 200 OK"
+    NOT_FOUND = "HTTP/1.1 404.html Not Found"
 
 # Content类型
 class ContentType(object):
@@ -97,9 +99,11 @@ class RequestHandler(BaseHTTPRequestHandler):
     def api(self, url):
         # ----------------------------------------------------------------
         # 此处写API
-        
         if (url == "/log"):
             content = str(log.get_data())
+        if (url[:11] == "/changeInfo"):
+            changeInfo(url)
+            content = "200"
         else:
             content = "No Response"
 
@@ -116,4 +120,20 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def noFound(self):
         self.file("/404.html")
+
+def changeInfo(url):
+    if url.find('?') != -1:
+        request_data = {}
+        req = url.split('?', 1)[1]
+        parameters = req.split('&')
+        for i in parameters:
+            key, val = i.split('=', 1)
+            request_data[key] = val
+        message = request_data["message"]
+        message = urllib.parse.unquote(message)
+        sendFriendMessage(message, 1462648167)
+    else:
+        file_name = url
+        # self.handle_keywords_request()
+
         
