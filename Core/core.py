@@ -12,11 +12,11 @@ def main():
     classList = ClassExistsList()
     changeInfoURL = "http://{}:{}/changeInfo".format(SERVER_HOST, PORT)
     for classID in classList:
-        remindMessage = bigLearn.classDoNotList(classID) + "申请更改大学习信息:\n" + changeInfoURL
+        remindMessage = bigLearn.classDoNotList(classID) + "\n申请更改大学习信息:\n" + changeInfoURL
         groupID = ClassGroupID(classID)
         if groupID != "":
             if DEBUG:
-                sendFriendMessage(bigLearn.classDoNotList(classID), 1462648167)  # 发送个人消息
+                sendFriendMessage(remindMessage, 1462648167)  # 发送个人消息
             else:
                 sendGroupMessage(remindMessage, groupID)
             time.sleep(random.randint(10,60))
