@@ -5,7 +5,7 @@ from ClassData.DataAPI import ClassExistsList, ClassGroupID
 from Log import log
 from Message import send_user_message, send_group_message
 from Settings import SERVER_HOST, LOCAL_HOST, PORT, DEBUG, DEBUG_TOKEN, WorkTimeStart, WorkTimeEnd
-from Server import server
+from Server.server import server
 from threading import Thread
 from Scheduler import time_in_work, min_sleep
 
@@ -21,7 +21,8 @@ def main():
         # send_user_message(bigLearn.classDoNotList(classID), 304743174)  # 发送个人消息
         # time.sleep(5)
         if groupID != "":
-            send_group_message(remindMessage, groupID)
+            send_user_message(bigLearn.classDoNotList(classID), 1462648167)  # 发送个人消息
+            #send_group_message(remindMessage, groupID)
             time.sleep(random.randint(10,60))
 
 def cruise():

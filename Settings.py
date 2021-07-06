@@ -24,3 +24,6 @@ Chrome_Agent = 'user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) Apple
 
 # selenium是否开启无头浏览器（开启DEBUG后此项失效，默认为True）
 Headless_Chrome = True
+
+import os
+ROOTPATH = os.path.abspath(os.path.dirname(__file__))
