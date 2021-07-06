@@ -3,7 +3,7 @@ import time
 from Base import BigLearn
 from ClassData.DataAPI import ClassExistsList, ClassGroupID
 from Log import log
-from Message import send_user_message, send_group_message
+from Message import sendFriendMessage, sendGroupMessage
 from Settings import SERVER_HOST, LOCAL_HOST, PORT, DEBUG, DEBUG_TOKEN, WorkTimeStart, WorkTimeEnd
 from Server.server import server
 from threading import Thread
@@ -21,8 +21,8 @@ def main():
         # send_user_message(bigLearn.classDoNotList(classID), 304743174)  # 发送个人消息
         # time.sleep(5)
         if groupID != "":
-            send_user_message(bigLearn.classDoNotList(classID), 1462648167)  # 发送个人消息
-            #send_group_message(remindMessage, groupID)
+            # sendFriendMessage(bigLearn.classDoNotList(classID), 1462648167)  # 发送个人消息
+            sendGroupMessage(remindMessage, groupID)
             time.sleep(random.randint(10,60))
 
 def cruise():
