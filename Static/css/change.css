@@ -73,6 +73,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: nowrap;
     width: 70vw;
     height: 80vh;
     border-radius: 5vw;
@@ -86,7 +87,7 @@ p {
     margin: 2vh;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
 }
@@ -193,6 +194,12 @@ p {
     }
 }
 
+/*Shrinking for Mobile*/
+@media only screen and (max-device-width: 768px) {
+    .glass {
+        min-height: 800px;
+    }
+}
 /*Shrinking for PC*/
 @media only screen and (min-device-width: 768px) {
     .waves {
@@ -209,6 +216,7 @@ p {
     }
 
     .glass {
+        min-height: 600px;
         width: 30vw;
         border-radius: 1vw;
     }
