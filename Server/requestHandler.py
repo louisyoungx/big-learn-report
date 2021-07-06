@@ -1,5 +1,6 @@
 import os, json
 from Log import log
+from Settings import ROOTPATH
 from http.server import BaseHTTPRequestHandler
 
 # Document https://docs.python.org/3.9/library/http.server.html
@@ -21,7 +22,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     # 处理一个GET请求
     def do_GET(self):
-        self.rootDir = os.getcwd() + "/Static"
+        self.rootDir = ROOTPATH + "/Static"
         url = self.requestline[4:-9]
         if (url == "/"):
             self.home()

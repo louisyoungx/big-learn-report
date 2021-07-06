@@ -21,7 +21,8 @@ def main():
         # send_user_message(bigLearn.classDoNotList(classID), 304743174)  # 发送个人消息
         # time.sleep(5)
         if groupID != "":
-            send_group_message(remindMessage, groupID)
+            send_user_message(bigLearn.classDoNotList(classID), 1462648167)  # 发送个人消息
+            #send_group_message(remindMessage, groupID)
             time.sleep(random.randint(10,60))
 
 def cruise():
