@@ -1,11 +1,10 @@
-import time
 import json
 import requests
 import time
 
 from ClassData.DataAPI import ClassExistsList, ClassInfoData, nameFormatter
-from Log import log
-from Settings import USERNAME, PASSWORD, Chrome_Agent, Headless_Chrome, DEBUG, URL_Login, URL_Records, URL_CourseList, DEBUG_TOKEN
+from Logs.logs import log
+from Settings.settings import USERNAME, PASSWORD, Chrome_Agent, Headless_Chrome, DEBUG, URL_Login, URL_Records, URL_CourseList, DEBUG_TOKEN
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
@@ -46,25 +45,25 @@ class BigLearn:
 
     def __init__(self, course_id=""):
         if DEBUG == True and DEBUG_TOKEN != "":  # 启动Selenium获取Token
-            log.update("(Base): DEBUG_TOKEN: {}".format(DEBUG_TOKEN))
+            log.update("Base", "DEBUG_TOKEN: {}".format(DEBUG_TOKEN))
         else:
             self.getToken()
         if course_id == "":
             self.getCourseID()
         else:
             self.course_id = course_id
-        log.update("(Base): Course ID {}".format(self.course_id))
+        log.update("Base", "Course ID {}".format(self.course_id))
         self.getTotalList()
         self.doNotList()
 
     def getToken(self):
-        log.update("(Base.getToken): Get Token -> {}".format(self.URL_login))
+        log.update("Base.getToken", "Get Token -> {}".format(self.URL_login))
         driver = webdriver.Chrome('/usr/local/bin/chromedriver', options=self.chrome_options)
         driver.get(self.URL_login)
         driver.maximize_window()
 
         # 如网速速度不快需要开启以下两项
-        # log.update("(Base.getToken): (5s)Loading······")
+        # log.update("Base.getToken", "(5s)Loading······")
         # time.sleep(5)
 
         # 自动输入用户名
@@ -76,7 +75,7 @@ class BigLearn:
         js = 'return localStorage.getItem("pc_accessToken")'
         self.token = driver.execute_script(js)  # 调用js方法，同时执行javascript脚本
         driver.quit()
-        log.update("(Base.getToken): access_token: {}".format(self.token))
+        log.update("Base.getToken", "access_token: {}".format(self.token))
         return self.token
 
     def getCourseID(self):
@@ -97,7 +96,7 @@ class BigLearn:
 
 
     def getTotalList(self):
-        log.update("(Base.getTotalList): Getting the Total Info List······")
+        log.update("Base.getTotalList", "Getting the Total Info List······")
         self.totalDoList = []
         page = 1
         parameters = {
@@ -116,10 +115,13 @@ class BigLearn:
         #log.update(info)
         if self.BASE_DEBUG == True: # 测试模式，加载一页数据用于测试
             self.totalDoList += info["result"]["list"]
-            log.update("(Base.getTotalList): {}".format(info["result"]["list"]))
+            log.update("Base.getTotalList", "{}".format(info["result"]["list"]))
         else: # 生产模式加载全部JSON数据
             while info["result"]["list"] != []:
-                log.update("(Base.getTotalList): Page -> {}".format(page))
+                if DEBUG:
+                    sign_left = int(page)*"="
+                    sign_right = (50-int(page))*"·"
+                    log.update("Base.getTotalList", "Page-{} [{}{}]".format(page, sign_left, sign_right))
                 self.totalDoList += info["result"]["list"]
                 page += 1
                 parameters = {
@@ -133,15 +135,15 @@ class BigLearn:
                 try:
                     response = requests.get(self.URL_records, params=parameters, headers=headers)
                 except:
-                    log.update("(Base.getTotalList): <ERROR> 403 Forbidden - Too Fast")
+                    log.update("Base.getTotalList", "<ERROR> 403 Forbidden - Too Fast")
                     page -= 1
                 info = json.loads(response.text)
                 # time.sleep(1)
         if info["status"] == 403:
-            log.update("(Base.getTotalList): <ERROR> 403 Forbidden - Token Invalid")
+            log.update("Base.getTotalList", "<ERROR> 403 Forbidden - Token Invalid")
             self.getToken()
             return self.getTotalList()
-        log.update("(Base.getTotalList): Already Get the Total Data")
+        log.update("Base.getTotalList", "Already Get the Total Data")
         return self.totalDoList
 
     def doList(self):
@@ -172,7 +174,7 @@ class BigLearn:
                             try:
                                 eachClass["MemberList"].remove(ID_Name)
                             except:
-                                #DEBUG log.update("(Base.doNotList): ERROR with ID-Name -> {}".format(ID_Name))
+                                #DEBUG log.update("Base.doNotList", "ERROR with ID-Name -> {}".format(ID_Name))
                                 pass
         return self.totalDoNotList
 

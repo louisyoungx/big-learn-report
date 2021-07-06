@@ -1,7 +1,7 @@
 import datetime
 import time
-from Log import log
-from Settings import WorkTimeStart, WorkTimeEnd
+from Logs.logs import log
+from Settings.settings import WorkTimeStart, WorkTimeEnd
 
 
 def getTime():
@@ -32,7 +32,7 @@ def min_sleep(startTime, endTime):
     # 来获取时间差中的秒数。注意，seconds获得的秒只是时间差中的小时、分钟和秒部分的和，并没有包含时间差的天数（既是两个时间点不是同一天，失效）
     total_seconds = (endTime2 - startTime2).total_seconds()
     # 来获取准确的时间差，并将时间差转换为秒
-    log.update("(Scheduler): Sleeping -> Resume Work at {}".format(endTime2))
+    log.update("Scheduler", "Sleeping -> Resume Work at {}".format(endTime2))
     time.sleep(total_seconds)
     return True
 

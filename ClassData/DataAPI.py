@@ -1,6 +1,6 @@
 import copy
 from ClassData.ClassData import classExistsList, classDataDict, classGroupID
-from Log import log
+from Logs.logs import log
 
 
 def ClassExistsList():
@@ -30,7 +30,7 @@ def nameFormatter(name, classMemList):
     elif ("-" in name or " " in name or " " in name or "—" in name or "/" in name): # 18012345-曾建雄 / 18012345 曾建雄
         ID_Name = _nameFormatter_with_ID_bar_name(name, classMemList)
     else:
-        log.update("(DataAPI.nameFormatter): <Warning> Invalid Name -> {}".format(name))
+        log.update("DataAPI.nameFormatter", "Invalid Name -> {}".format(name), debug="WARNING")
         return ""
     return ID_Name
 
@@ -43,14 +43,14 @@ def _nameFormatter_with_ID(ID, classMemList):
         for member in classMemList:
             if member[:8] == ID:
                 return member
-    log.update("(DataAPI.nameFormatter_ID): <Warning> Invalid Name -> {}".format(ID))
+    log.update("DataAPI.nameFormatter_ID", "Invalid Name -> {}".format(ID), debug="WARNING")
     return ID
 
 def _nameFormatter_with_name(name, classMemList):
     for member in classMemList:
         if member[9:] == name:
             return member
-    log.update("(DataAPI.nameFormatter_Name): <Warning> Invalid Name -> {}".format(name))
+    log.update("DataAPI.nameFormatter_Name", "Invalid Name -> {}".format(name), debug="WARNING")
     return name
 
 def _nameFormatter_with_ID_name(id_name, classMemList):
@@ -58,21 +58,21 @@ def _nameFormatter_with_ID_name(id_name, classMemList):
         for member in classMemList:
             if member[:8] == id_name[:8]:
                 return member
-        log.update("(DataAPI.nameFormatter_IDName): <Warning> Invalid Name -> {}".format(id_name))
+        log.update("DataAPI.nameFormatter_IDName", "Invalid Name -> {}".format(id_name), debug="WARNING")
     else:
         for member in classMemList:
             if member[:8] == id_name[-8:]:
                 return member
-        log.update("(DataAPI.nameFormatter_NameID): <Warning> Invalid Name -> {}".format(id_name))
+        log.update("DataAPI.nameFormatter_NameID", "Invalid Name -> {}".format(id_name), debug="WARNING")
 
 def _nameFormatter_with_ID_bar_name(id_bar_name, classMemList):
     if (id_bar_name[0].isdigit()):
         for member in classMemList:
             if member[:8] == id_bar_name[:8]:
                 return member
-        log.update("(DataAPI.nameFormatter_ID-Name): <Warning> Invalid Name -> {}".format(id_bar_name))
+        log.update("DataAPI.nameFormatter_ID-Name", "Invalid Name -> {}".format(id_bar_name), debug="WARNING")
     else:
         for member in classMemList:
             if member[:8] == id_bar_name[-8:]:
                 return member
-        log.update("(DataAPI.nameFormatter_Name-ID): <Warning> Invalid Name -> {}".format(id_bar_name))
+        log.update("DataAPI.nameFormatter_Name-ID", "Invalid Name -> {}".format(id_bar_name), debug="WARNING")
