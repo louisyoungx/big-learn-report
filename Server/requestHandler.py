@@ -5,6 +5,9 @@ from http.server import BaseHTTPRequestHandler
 # Document https://docs.python.org/3.9/library/http.server.html
 
 # 返回码
+from Settings.settings import SERVER_LOG
+
+
 class ErrorCode(object):
     OK = "HTTP/1.1 200 OK\r\n"
     NOT_FOUND = "HTTP/1.1 404.html Not Found\r\n"
@@ -32,7 +35,10 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.file(url)
 
     def log_message(self, format, *args):
-        log.update("Server", format%args)
+        if SERVER_LOG:
+            log.update("Server", format%args)
+        else:
+            pass
 
     def home(self):
 

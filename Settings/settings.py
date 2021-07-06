@@ -26,7 +26,7 @@ QQBotUID = 2782594859
 
 LOG_LENGTH = 100 # 记录100条数据
 
-
+SERVER_LOG = False # 开启HTTP Server的log记录
 SCHEDULER = True # 是否开启定时执行，调度器开启后main函数将被scheduler调度器代理，开启定时执行main
 WorkTimeStart = '18:00' # 任务开启时间
 WorkTimeEnd = '18:05' # 任务结束时间
