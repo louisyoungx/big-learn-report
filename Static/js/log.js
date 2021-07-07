@@ -1,5 +1,4 @@
-var host = window.location.href
-var url = host + "api/log";
+var url = window.location.origin + "/api/log";
 var content = "";
 
 const ajax = new Promise(function (resolve, reject) {

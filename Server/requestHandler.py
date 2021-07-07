@@ -87,6 +87,12 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(file_page_file.read())
             return
+        elif file_name[-4:] == ".ico":  # 二进制文件
+            self.send_header("Content-Type", "img/ico")
+            file_page_file = open(file_path, 'rb')
+            self.end_headers()
+            self.wfile.write(file_page_file.read())
+            return
 
         file_page_file = open(file_path, 'r')
         content = str(file_page_file.read())
@@ -99,9 +105,10 @@ class RequestHandler(BaseHTTPRequestHandler):
     def api(self, url):
         # ----------------------------------------------------------------
         # 此处写API
+        print(url)
         if (url == "/log"):
             content = str(log.get_data())
-        if (url[:11] == "/changeInfo"):
+        elif (url[:11] == "/changeInfo"):
             changeInfo(url)
             content = "200"
         else:
