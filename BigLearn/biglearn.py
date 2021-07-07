@@ -119,8 +119,8 @@ class BigLearn:
         else: # 生产模式加载全部JSON数据
             while info["result"]["list"] != []:
                 if DEBUG:
-                    sign_left = int(page)*"="
-                    sign_right = (50-int(page))*"·"
+                    sign_left = int(page)*"=" + ">"
+                    sign_right = (49-int(page))*"·"
                     log.update("Base.getTotalList", "Page-{} [{}{}]".format(page, sign_left, sign_right))
                 self.totalDoList += info["result"]["list"]
                 page += 1
