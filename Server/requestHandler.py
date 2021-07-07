@@ -105,7 +105,6 @@ class RequestHandler(BaseHTTPRequestHandler):
     def api(self, url):
         # ----------------------------------------------------------------
         # 此处写API
-        print(url)
         if (url == "/log"):
             content = str(log.get_data())
         elif (url[:11] == "/changeInfo"):
