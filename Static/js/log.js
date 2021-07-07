@@ -48,6 +48,22 @@ const ajax = new Promise(function (resolve, reject) {
 
     glassElm.appendChild(glass_item_list);
   })
-})
+});
+
+// var url = window.location.origin + "/api/log";
+// var content = "";
+//
+// const ajax = new Promise(function (resolve, reject) {
+//   axios
+//     .get(url)
+//     .then(function (response) {
+//       content = response.data.data;
+//       resolve(content);
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//       reject(error);
+//     });
+// })
 
 
