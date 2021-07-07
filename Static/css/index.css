@@ -618,7 +618,10 @@ miscs
     opacity: 0.6;
   }
 
-  html {
+  html,
+  body {
+    display: flex;
+    width: 100%;
     background-image: linear-gradient(
       to right top,
       #051937,
@@ -627,13 +630,6 @@ miscs
       #00bf72,
       #a8eb12
     );
-  }
-
-  html,
-  body {
-    display: flex;
-    width: 100%;
-    height: 100%;
     font-family: "Noto Sans", sans-serif;
     color: white;
     text-align: center;
