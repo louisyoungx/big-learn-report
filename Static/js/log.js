@@ -22,6 +22,7 @@ const ajax = new Promise(function (resolve, reject) {
   //     item.id = 'item';
   //     glassElm.appendChild(item);
   // }
+  info.reverse(); // 反向迭代
   info.forEach((value, index, array) => {
     let time = value.substring(0, 21);
     let module = value.substring(21).split(":")[0];
