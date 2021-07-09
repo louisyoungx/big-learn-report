@@ -52,7 +52,13 @@
 
 2. 按注释要求编辑/Config/config.ini文件中配置项
 
-3. 确保你此时在/tiny-server目录下，并运行
+3. 在Logger/目录下创建Log_Files/目录，在Log_Files/目录下创建你配置项中填写的文件名
+   ```sh
+   mkdir Logger/Log_Files
+   touch Logger/Log_Files/TinyServer.log
+   ```
+   
+4. 确保你此时在/tiny-server目录下，并运行
 
    ```sh
    python3 runserver

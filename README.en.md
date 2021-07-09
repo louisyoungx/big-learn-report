@@ -53,7 +53,13 @@
 
 2. Edit the configuration items in /Config/config.ini file according to the comment requirements
 
-3. Make sure you are in /tiny-server and enter
+3. Create the Log_Files/ directory in the Logger/ directory and the file name you specified in your configuration
+   ```sh
+   mkdir Logger/Log_Files
+   touch Logger/Log_Files/TinyServer.log
+   ```
+
+4. Make sure you are in /tiny-server and enter
 
    ```sh
    python3 runserver
