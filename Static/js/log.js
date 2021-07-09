@@ -14,7 +14,7 @@ const ajax = new Promise(function (resolve, reject) {
     });
 }).then(function (content) {
   console.log(content);
-  info = eval(content);
+  info = content.split("\n");
 
   const glassElm = document.getElementById("glass-text");
   // for (let i = 0; i < 100; i++) {

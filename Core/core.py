@@ -4,10 +4,13 @@ import time
 from BigLearn.biglearn import BigLearn
 from ClassData.DataAPI import ClassExistsList, ClassGroupID
 from Message.message import sendGroupMessage, sendFriendMessage
-from Settings.settings import DEBUG, SERVER_HOST, PORT
+from Config.settings import config
 
 
 def main():
+    DEBUG = config.settings("Debug", "DEBUG")
+    PORT = config.settings("Server", "PORT")
+    SERVER_HOST = config.settings("Server", "SERVER_HOST")
     bigLearn = BigLearn()
     classList = ClassExistsList()
     changeInfoURL = "http://{}:{}/change.html".format(SERVER_HOST, PORT)

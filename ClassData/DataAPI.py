@@ -1,6 +1,6 @@
 import copy
 from ClassData.ClassData import classExistsList, classDataDict, classGroupID
-from Logs.logs import log
+from Logger.logger import logger
 
 
 def ClassExistsList():
@@ -30,7 +30,7 @@ def nameFormatter(name, classMemList):
     elif ("-" in name or " " in name or " " in name or "—" in name or "/" in name): # 18012345-曾建雄 / 18012345 曾建雄
         ID_Name = _nameFormatter_with_ID_bar_name(name, classMemList)
     else:
-        log.update("DataAPI.nameFormatter", "Invalid Name -> {}".format(name), debug="WARNING")
+        logger.warning("Invalid Name -> {}".format(name))
         return ""
     return ID_Name
 

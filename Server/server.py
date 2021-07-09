@@ -1,10 +1,14 @@
 import json
 from http.server import HTTPServer
-from Logs.logs import log
-from Server.requestHandler import RequestHandler
-from Settings.settings import LOCAL_HOST, PORT, SERVER_HOST, DEBUG
+from Logger.logger import logger
+from Server.handler import RequestHandler
+from Config.settings import config
 
 def server():
+    DEBUG = config.settings("Debug", "DEBUG")
+    LOCAL_HOST = config.settings("Server", "LOCAL_HOST")
+    SERVER_HOST = config.settings("Server", "SERVER_HOST")
+    PORT = config.settings("Server", "PORT")
     if DEBUG == True:
         name = LOCAL_HOST
     else:
@@ -12,6 +16,6 @@ def server():
     port = PORT
     host = LOCAL_HOST
     serverAddress = (host, port)
-    log.update("Server", "http://{}:{}/".format(name, port))
+    logger.info("http://{}:{}/".format(name, port))
     server = HTTPServer(serverAddress, RequestHandler)
     server.serve_forever()

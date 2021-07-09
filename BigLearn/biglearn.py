@@ -3,33 +3,35 @@ import requests
 import time
 
 from ClassData.DataAPI import ClassExistsList, ClassInfoData, nameFormatter
-from Logs.logs import log
-from Settings.settings import USERNAME, PASSWORD, Chrome_Agent, Headless_Chrome, DEBUG, URL_Login, URL_Records, URL_CourseList, DEBUG_TOKEN
+from Logger.logger import logger
+from Config.settings import config
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 class BigLearn:
     BASE_DEBUG = False
-    URL_login = URL_Login  # 登录的URL
-    URL_records = URL_Records  # 查询的URL
-    URL_courseList = URL_CourseList  # 查询的URL
-    username = USERNAME  # 用户名
-    password = PASSWORD  # 密码
-    config_agent = Chrome_Agent  # 爬虫请求头
-    config_headless = Headless_Chrome  # 是否开启无头
+    URL_login = config.settings("BigLearn", "URL_Login")  # 登录的URL
+    URL_records = config.settings("BigLearn", "URL_Records")  # 查询的URL
+    URL_courseList = config.settings("BigLearn", "URL_CourseList")  # 查询的URL
+    username = config.settings("BigLearn", "USERNAME")  # 用户名
+    password = config.settings("BigLearn", "PASSWORD")  # 密码
+    config_agent = config.settings("Spider", "Chrome_Agent")  # 爬虫请求头
+    config_headless = config.settings("Spider", "Headless_Chrome")  # 是否开启无头
+    DEBUG = config.settings("Debug", "DEBUG")
+    DEBUG_TOKEN = config.settings("Debug", "TOKEN")
 
     if DEBUG:
         config_headless = True
 
     chrome_options = Options()
-    chrome_options.add_argument(Chrome_Agent)
+    chrome_options.add_argument(config_agent)
     chrome_options.add_argument("--profile-directory=Default")
     chrome_options.add_argument("--whitelisted-ips")
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-plugins-discovery")
 
-    if Headless_Chrome == True:
+    if config_headless == True:
         # 此处开启后为无头浏览器
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
@@ -44,26 +46,26 @@ class BigLearn:
         token = None
 
     def __init__(self, course_id=""):
-        if DEBUG == True and DEBUG_TOKEN != "":  # 启动Selenium获取Token
-            log.update("Base", "DEBUG_TOKEN: {}".format(DEBUG_TOKEN))
+        if self.DEBUG == True and self.DEBUG_TOKEN != "":  # 启动Selenium获取Token
+            logger.info("DEBUG_TOKEN: {}".format(self.DEBUG_TOKEN))
         else:
             self.getToken()
         if course_id == "":
             self.getCourseID()
         else:
             self.course_id = course_id
-        log.update("Base", "Course ID {}".format(self.course_id))
+        logger.info("Course ID {}".format(self.course_id))
         self.getTotalList()
         self.doNotList()
 
     def getToken(self):
-        log.update("Base.getToken", "Get Token -> {}".format(self.URL_login))
+        logger.info("Get Token -> {}".format(self.URL_login))
         driver = webdriver.Chrome('/usr/local/bin/chromedriver', options=self.chrome_options)
         driver.get(self.URL_login)
         driver.maximize_window()
 
         # 如网速速度不快需要开启以下两项
-        # log.update("Base.getToken", "(5s)Loading······")
+        # logger.info("(5s)Loading······")
         # time.sleep(5)
 
         # 自动输入用户名
@@ -75,7 +77,7 @@ class BigLearn:
         js = 'return localStorage.getItem("pc_accessToken")'
         self.token = driver.execute_script(js)  # 调用js方法，同时执行javascript脚本
         driver.quit()
-        log.update("Base.getToken", "access_token: {}".format(self.token))
+        logger.info("access_token: {}".format(self.token))
         return self.token
 
     def getCourseID(self):
@@ -96,7 +98,7 @@ class BigLearn:
 
 
     def getTotalList(self):
-        log.update("Base.getTotalList", "Getting the Total Info List······")
+        logger.info("Getting the Total Info List······")
         self.totalDoList = []
         page = 1
         parameters = {
@@ -115,13 +117,13 @@ class BigLearn:
         #log.update(info)
         if self.BASE_DEBUG == True: # 测试模式，加载一页数据用于测试
             self.totalDoList += info["result"]["list"]
-            log.update("Base.getTotalList", "{}".format(info["result"]["list"]))
+            logger.info("{}".format(info["result"]["list"]))
         else: # 生产模式加载全部JSON数据
             while info["result"]["list"] != []:
-                if DEBUG:
+                if self.DEBUG:
                     sign_left = int(page)*"=" + ">"
                     sign_right = (49-int(page))*"·"
-                    log.update("Base.getTotalList", "Page-{} [{}{}]".format(page, sign_left, sign_right))
+                    logger.info("Page-{} [{}{}]".format(page, sign_left, sign_right))
                 self.totalDoList += info["result"]["list"]
                 page += 1
                 parameters = {
@@ -135,15 +137,15 @@ class BigLearn:
                 try:
                     response = requests.get(self.URL_records, params=parameters, headers=headers)
                 except:
-                    log.update("Base.getTotalList", "<ERROR> 403 Forbidden - Too Fast")
+                    logger.info("<ERROR> 403 Forbidden - Too Fast")
                     page -= 1
                 info = json.loads(response.text)
                 # time.sleep(1)
         if info["status"] == 403:
-            log.update("Base.getTotalList", "<ERROR> 403 Forbidden - Token Invalid")
+            logger.info("<ERROR> 403 Forbidden - Token Invalid")
             self.getToken()
             return self.getTotalList()
-        log.update("Base.getTotalList", "Already Get the Total Data")
+        logger.info("Already Get the Total Data")
         return self.totalDoList
 
     def doList(self):

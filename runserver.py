@@ -1,11 +1,12 @@
 from Core.core import main
-from Logs.logs import log
+from Logger.logger import logger
 from Scheduler.scheduler import schedule
-from Settings.settings import DEBUG, SCHEDULER
+from Config.settings import config
 from Server.server import server
 from threading import Thread
 
 def running():
+    SCHEDULER = config.settings("Scheduler", "START_USING")
     if SCHEDULER == False:
         thread_main = Thread(target=main)
         thread_main.start()
@@ -17,8 +18,9 @@ def running():
     thread_server.start()
 
 if __name__ == "__main__":
+    DEBUG = config.settings("Debug", "DEBUG")
     if DEBUG == True:
-        log.update("Core", "===== DEBUG MODE =====")
+        logger.info("\n===== DEBUG MODE =====")
         main()
     else:
         running()

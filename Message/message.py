@@ -1,7 +1,7 @@
 import json
 import requests
 
-from Logs.logs import log
+from Logger.logger import logger
 
 
 def sendFriendMessage(message, userid):
@@ -24,7 +24,7 @@ def sendFriendMessage(message, userid):
         mes = message.replace("\n", " ")
         if len(mes) > 10:
             mes = mes[:10] + "···"
-        log.update("Group Message", "Send {}".format(mes), "SUCCESS")
+        logger.info("Send {}".format(mes))
 
 
         # print(sender.request.url)
@@ -32,7 +32,7 @@ def sendFriendMessage(message, userid):
         # print(sender.text)
         return True
     except:
-        log.update("Group Message", "Message Send Failed", "ERROR")
+        logger.error("Message Send Failed")
         return False
 
 
@@ -55,12 +55,12 @@ def sendGroupMessage(message, groupid):
         mes = message.replace("\n", " ")
         if len(mes) > 10:
             mes = mes[:10] + "···"
-        log.update("Group Message", "Send {}".format(mes), "SUCCESS")
+        logger.info("Send {}".format(mes))
 
         # print(sender.request.url)
         # sender.raise_for_status()
         # print(sender.text)
         return True
     except:
-        log.update("Group Message", "Message Send Failed", "ERROR")
+        logger.error("Message Send Failed")
         return False
