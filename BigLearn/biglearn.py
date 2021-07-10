@@ -39,7 +39,6 @@ class BigLearn:
         chrome_options.add_argument('blink-settings=imagesEnabled=false')
         chrome_options.add_argument('--disable-gpu')
 
-    chrome_options = chrome_options
     if DEBUG == True and DEBUG_TOKEN != "":
         token = DEBUG_TOKEN
     else:
