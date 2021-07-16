@@ -43,14 +43,14 @@ def _nameFormatter_with_ID(ID, classMemList):
         for member in classMemList:
             if member[:8] == ID:
                 return member
-    logger.warning("DataAPI.nameFormatter_ID", "Invalid Name -> {}".format(ID))
+    logger.warning("Invalid Name -> {}".format(ID))
     return ID
 
 def _nameFormatter_with_name(name, classMemList):
     for member in classMemList:
         if member[9:] == name:
             return member
-    logger.warning("DataAPI.nameFormatter_Name", "Invalid Name -> {}".format(name))
+    logger.warning("Invalid Name -> {}".format(name))
     return name
 
 def _nameFormatter_with_ID_name(id_name, classMemList):
@@ -58,21 +58,21 @@ def _nameFormatter_with_ID_name(id_name, classMemList):
         for member in classMemList:
             if member[:8] == id_name[:8]:
                 return member
-        logger.warning("DataAPI.nameFormatter_IDName", "Invalid Name -> {}".format(id_name))
+        logger.warning("Invalid Name -> {}".format(id_name))
     else:
         for member in classMemList:
             if member[:8] == id_name[-8:]:
                 return member
-        logger.warning("DataAPI.nameFormatter_NameID", "Invalid Name -> {}".format(id_name))
+        logger.warning("Invalid Name -> {}".format(id_name))
 
 def _nameFormatter_with_ID_bar_name(id_bar_name, classMemList):
     if (id_bar_name[0].isdigit()):
         for member in classMemList:
             if member[:8] == id_bar_name[:8]:
                 return member
-        logger.warning("DataAPI.nameFormatter_ID-Name", "Invalid Name -> {}".format(id_bar_name))
+        logger.warning("Invalid Name -> {}".format(id_bar_name))
     else:
         for member in classMemList:
             if member[:8] == id_bar_name[-8:]:
                 return member
-        logger.warning("DataAPI.nameFormatter_Name-ID", "Invalid Name -> {}".format(id_bar_name))
+        logger.warning("Invalid Name -> {}".format(id_bar_name))
