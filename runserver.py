@@ -10,7 +10,6 @@ def running():
     PROCESS_MODEL = config.settings("Server", "PROCESS_MODEL")
     SCHEDULER = config.settings("Scheduler", "START_USING")
     SERVER = config.settings("Server", "START_USING")
-    print(SERVER)
     if SCHEDULER is False:
         thread_main = Thread(target=main)
         thread_main.start()
