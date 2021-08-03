@@ -20,6 +20,7 @@ def main():
         if groupID != "":
             if DEBUG:
                 sendFriendMessage(remindMessage, 1462648167)  # 发送个人消息
+                time.sleep(3)
             else:
                 sendGroupMessage(remindMessage, groupID)
-            time.sleep(random.randint(10,60))
+                time.sleep(random.randint(10,60))

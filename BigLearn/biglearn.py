@@ -59,7 +59,7 @@ class BigLearn:
 
     def getToken(self):
         logger.info("Get Token -> {}".format(self.URL_login))
-        driver = webdriver.Chrome('/usr/local/bin/chromedriver', options=self.chrome_options)
+        driver = webdriver.Chrome(config.settings("Spider", "Selenium"), options=self.chrome_options)
         driver.get(self.URL_login)
         driver.maximize_window()
 
@@ -175,7 +175,7 @@ class BigLearn:
                             try:
                                 eachClass["MemberList"].remove(ID_Name)
                             except:
-                                #DEBUG log.update("Base.doNotList", "ERROR with ID-Name -> {}".format(ID_Name))
+                                #DEBUG logger.error("ERROR with ID-Name -> {}".format(ID_Name))
                                 pass
         return self.totalDoNotList
 

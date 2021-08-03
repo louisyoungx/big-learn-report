@@ -10,7 +10,7 @@ def running():
     PROCESS_MODEL = config.settings("Server", "PROCESS_MODEL")
     SCHEDULER = config.settings("Scheduler", "START_USING")
     SERVER = config.settings("Server", "START_USING")
-    if SCHEDULER is False:
+    if not SCHEDULER:
         thread_main = Thread(target=main)
         thread_main.start()
     else: # 调度器开启后main函数将被scheduler调度器代理，开启定时执行main
@@ -19,7 +19,7 @@ def running():
         scheduler = Timer(task=main, startTime=startTime, skipWeekend=skipWeekend)
         thread_scheduler = Thread(target=scheduler.schedule)
         thread_scheduler.start()
-    if SERVER is True:
+    if SERVER:
         if PROCESS_MODEL:
             work_count = config.settings("Server", "PROCESS_COUNT")
             server_process(work_count)
@@ -34,7 +34,7 @@ def server_process(work_count=4):
 
 if __name__ == "__main__":
     DEBUG = config.settings("Debug", "DEBUG")
-    if DEBUG is True:
+    if DEBUG:
         logger.info("\n===== DEBUG MODE =====")
         main()
     else:
