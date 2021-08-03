@@ -29,7 +29,7 @@ class Message(object):
             logger.info("Send {}".format(mes))
     
             if self.DEBUG:
-                print(URL)
+                print(sender.request.URL)
                 sender.raise_for_status()
                 print(sender.text)
         except:
