@@ -13,9 +13,9 @@ def main():
     SERVER_HOST = config.settings("Server", "SERVER_HOST")
     bigLearn = BigLearn()
     classList = ClassExistsList()
-    changeInfoURL = "http://{}:{}/change.html".format(SERVER_HOST, PORT)
+    #changeInfoURL = "http://{}:{}/change.html".format(SERVER_HOST, PORT)
     for classID in classList:
-        remindMessage = bigLearn.classDoNotList(classID) + "\n申请更改大学习信息:\n" + changeInfoURL
+        remindMessage = bigLearn.classDoNotList(classID)# + "\n申请更改大学习信息:\n" + changeInfoURL
         groupID = ClassGroupID(classID)
         if groupID != "":
             if DEBUG:
